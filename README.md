@@ -37,7 +37,7 @@ Follow these steps to run the project locally:
 ### Prerequisites
 
 - Node.js v16+
-- npm or yarn
+- npm 
 
 ### Installation
 
