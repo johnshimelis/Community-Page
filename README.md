@@ -52,22 +52,6 @@ Follow these steps to run the project locally:
 3. Start the Development Server:
    npm start
 
-4. 📂 Folder Structure
-community-page/
-├── public/               # Static assets (e.g., index.html, favicon)
-├── src/                  # Main source code
-│   ├── components/       # Reusable React components
-│   ├── data/             # Mock data files
-│   ├── hooks/            # Custom hooks
-│   ├── styles/           # SCSS stylesheets
-│   ├── utils/            # Utility functions
-│   ├── App.tsx           # Main app component
-│   ├── index.tsx         # Entry point
-│   └── ...               # Other files
-├── .gitignore            # Files ignored by Git
-├── package.json          # Dependencies and project metadata
-├── tsconfig.json         # TypeScript configuration
-└── README.md             # Project documentation
 
 🧠 Architectural Decisions
 
