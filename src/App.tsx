@@ -1,21 +1,17 @@
-// App.tsx
 import React, { useState } from "react";
 import Post from "./components/Post.tsx";
 import CreatePost from "./components/CreatePost.tsx";
+import { mockData } from "./data/mockData.ts";
 import "./styles/App.scss";
 
 const App: React.FC = () => {
-  const [posts, setPosts] = useState<
-    {
-      id: number;
-      content: string;
-      image?: string;
-      likes: number;
-      dislikes: number;
-      shares: number;
-      comments: any[];
-    }[]
-  >([]);
+  const [posts, setPosts] = useState([...mockData]);
+
+  const syncMockData = (updatedPosts: typeof mockData) => {
+    // Update the mockData reference
+    mockData.length = 0;
+    mockData.push(...updatedPosts);
+  };
 
   const addPost = (content: string, image?: File) => {
     const newPost = {
@@ -27,14 +23,12 @@ const App: React.FC = () => {
       shares: 0,
       comments: [],
     };
-    setPosts([newPost, ...posts]);
+    const updatedPosts = [newPost, ...posts];
+    setPosts(updatedPosts);
+    syncMockData(updatedPosts);
   };
 
-  const addComment = (
-    postId: number,
-    content: string,
-    parentId?: number
-  ) => {
+  const addComment = (postId: number, content: string, parentId?: number) => {
     const updateComments = (comments: any[]) =>
       comments.map((comment) =>
         comment.id === parentId
@@ -48,43 +42,43 @@ const App: React.FC = () => {
           : { ...comment, comments: updateComments(comment.comments) }
       );
 
-    setPosts(
-      posts.map((post) =>
-        post.id === postId
-          ? {
-              ...post,
-              comments: parentId
-                ? updateComments(post.comments)
-                : [
-                    ...post.comments,
-                    {
-                      id: Date.now(),
-                      content,
-                      comments: [],
-                      likes: 0,
-                      dislikes: 0,
-                    },
-                  ],
-            }
-          : post
-      )
+    const updatedPosts = posts.map((post) =>
+      post.id === postId
+        ? {
+            ...post,
+            comments: parentId
+              ? updateComments(post.comments)
+              : [
+                  ...post.comments,
+                  {
+                    id: Date.now(),
+                    content,
+                    comments: [],
+                    likes: 0,
+                    dislikes: 0,
+                  },
+                ],
+          }
+        : post
     );
+    setPosts(updatedPosts);
+    syncMockData(updatedPosts);
   };
 
   const updatePostCounters = (
     postId: number,
     action: "likes" | "dislikes" | "shares"
   ) => {
-    setPosts(
-      posts.map((post) =>
-        post.id === postId
-          ? {
-              ...post,
-              [action]: post[action] + 1,
-            }
-          : post
-      )
+    const updatedPosts = posts.map((post) =>
+      post.id === postId
+        ? {
+            ...post,
+            [action]: post[action] + 1,
+          }
+        : post
     );
+    setPosts(updatedPosts);
+    syncMockData(updatedPosts);
   };
 
   const updateCommentCounters = (
@@ -99,13 +93,13 @@ const App: React.FC = () => {
           : { ...comment, comments: updateNestedComments(comment.comments) }
       );
 
-    setPosts(
-      posts.map((post) =>
-        post.id === postId
-          ? { ...post, comments: updateNestedComments(post.comments) }
-          : post
-      )
+    const updatedPosts = posts.map((post) =>
+      post.id === postId
+        ? { ...post, comments: updateNestedComments(post.comments) }
+        : post
     );
+    setPosts(updatedPosts);
+    syncMockData(updatedPosts);
   };
 
   return (
