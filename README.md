@@ -53,14 +53,14 @@ Follow these steps to run the project locally:
    npm start
 
 4. 📂 Folder Structure
-   community-page/
+community-page/
 ├── public/               # Static assets (e.g., index.html, favicon)
 ├── src/                  # Main source code
 │   ├── components/       # Reusable React components
 │   ├── data/             # Mock data files
-│             # Custom hooks
+│   ├── hooks/            # Custom hooks
 │   ├── styles/           # SCSS stylesheets
-│  
+│   ├── utils/            # Utility functions
 │   ├── App.tsx           # Main app component
 │   ├── index.tsx         # Entry point
 │   └── ...               # Other files
